@@ -1,0 +1,28 @@
+.label {
+  display: flex;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+
+  input {
+    margin-right: 1rem;
+  }
+}
+
+.text {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin-right: 1rem;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+
+  &Disabled {
+    color: #c0c0c0;
+  }
+}

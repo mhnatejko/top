@@ -1,0 +1,15 @@
+.offers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .p {
+    text-align: center;
+  }
+
+  .content {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+  }
+}

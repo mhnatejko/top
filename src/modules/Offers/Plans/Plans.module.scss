@@ -1,0 +1,11 @@
+.plans {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+  }
+}

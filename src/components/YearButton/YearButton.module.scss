@@ -1,0 +1,19 @@
+.yearButton {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  color: #6d6d6d;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(0, 0, 0);
+  }
+
+  &Active {
+    background-color: #ffffff;
+    color: #333333;
+  }
+}
