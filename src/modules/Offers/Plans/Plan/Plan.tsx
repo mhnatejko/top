@@ -1,20 +1,28 @@
-import { TMappedOffer, TSum } from "@/modules/Offers/types";
+import {
+  EService,
+  TMappedOffer,
+  TSelected,
+  TSum,
+} from "@/modules/Offers/types";
 import { formatPrice } from "@/modules/Offers/hooks/helpers";
 import Price from "../../../../components/Price/Price";
-import { checkIsDisabled, updateOffer } from "./helpers";
+import { checkIsDisabled, updateCheckedState } from "./helpers";
 import Checkbox from "../../../../components/Checkbox/Checkbox";
 import styles from "./Plan.module.scss";
 
 type TProps = {
-  sum: TSum;
   currentOffer: TMappedOffer;
-  setCurrentOffer: React.Dispatch<React.SetStateAction<TMappedOffer>>;
+  selected: TSelected;
+  setSelected: React.Dispatch<React.SetStateAction<TSelected>>;
+  sum: TSum;
 };
 
-const Plan = ({ currentOffer, setCurrentOffer, sum }: TProps) => {
+const Plan = ({ currentOffer, selected, setSelected, sum }: TProps) => {
   const checkboxOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    setCurrentOffer((prevOffer) => updateOffer(prevOffer, value, checked));
+    const newSelectedState = updateCheckedState(value, checked);
+
+    setSelected((prevSelected) => ({ ...prevSelected, ...newSelectedState }));
   };
 
   return (
@@ -22,10 +30,15 @@ const Plan = ({ currentOffer, setCurrentOffer, sum }: TProps) => {
       {currentOffer.prices?.map(({ id, value, isChecked, label }) => (
         <Checkbox
           key={id}
-          isDisabled={checkIsDisabled(id, currentOffer)}
+          isDisabled={checkIsDisabled(id, selected)}
           onChange={checkboxOnChange}
           text={formatPrice(value)}
-          {...{ id, value, label, isChecked }}
+          isChecked={selected[id]}
+          {...{
+            id,
+            value,
+            label,
+          }}
         />
       ))}
       <Price sum={sum} />

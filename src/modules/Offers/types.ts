@@ -24,8 +24,12 @@ export type TSum = {
 };
 
 export type TPriceObj = { [key: string]: number };
+export type TSelected = { [key: string]: boolean };
 
 export type TMappedOffer = {
+  id: string;
+  year: string;
+  selected: TSelected;
   prices: {
     label: string;
     isChecked: boolean;
@@ -38,8 +42,6 @@ export type TMappedOffer = {
     id: string;
     services: string[];
   }[];
-  id: string;
-  year: string;
 };
 
 export type TService = { [key: string]: boolean };

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
 import { countPromo, formatPrice } from "./helpers";
-import { TMappedOffer } from "../types";
+import { TMappedOffer, TSelected } from "../types";
 
 const useOffers = (offers: TMappedOffer[]) => {
   const [currentYearId, setCurrentYearId] = useState(() => offers[0].id);
   const [currentOffer, setCurrentOffer] = useState<TMappedOffer>(
     null as unknown as TMappedOffer
   );
+  const [selected, setSelected] = useState<TSelected>({});
   const [sum, setSum] = useState({
     baseSum: formatPrice(0),
   });
@@ -17,22 +18,25 @@ const useOffers = (offers: TMappedOffer[]) => {
     if (!currentOffer) return;
 
     setCurrentOffer(currentOffer);
+    setSelected(currentOffer.selected);
   }, [currentYearId]);
 
   useEffect(() => {
-    if (currentOffer) {
-      const sum = countPromo(currentOffer);
+    if (selected) {
+      const sum = countPromo(currentOffer, selected);
       if (!sum) return;
 
       setSum(sum);
     }
-  }, [currentOffer]);
+  }, [selected]);
 
   return {
     currentYearId,
     setCurrentYearId,
     currentOffer,
     setCurrentOffer,
+    selected,
+    setSelected,
     sum,
   };
 };

@@ -11,7 +11,8 @@ const Plans = ({ offers }: TProps) => {
     currentYearId,
     setCurrentYearId,
     currentOffer,
-    setCurrentOffer,
+    selected,
+    setSelected,
     sum,
   } = useOffers(offers);
 
@@ -29,7 +30,9 @@ const Plans = ({ offers }: TProps) => {
           />
         ))}
       </div>
-      {currentOffer && <Plan {...{ currentOffer, setCurrentOffer, sum }} />}
+      {currentOffer && (
+        <Plan {...{ currentOffer, selected, setSelected, sum }} />
+      )}
     </div>
   );
 };

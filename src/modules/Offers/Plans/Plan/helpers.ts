@@ -1,31 +1,17 @@
-import { EService, TMappedOffer } from "@/modules/Offers/types";
+import { EService, TSelected } from "@/modules/Offers/types";
 
-export const checkIsDisabled = (id: string, currentOffer: TMappedOffer) => {
+export const checkIsDisabled = (id: string, selected: TSelected) => {
   const isDecoder = id === EService.DecoderId;
-  const isTvChecked = !currentOffer.prices.find(
-    ({ id }) => id === EService.TvId
-  )?.isChecked;
+  const isTvChecked = selected[EService.TvId];
 
-  return isDecoder && isTvChecked;
+  return isDecoder && !isTvChecked;
 };
 
-export const updateOffer = (
-  prevOffer: TMappedOffer,
-  value: string,
-  checked: boolean
-) => {
-  const isTvUnchecked = value === EService.TvId && !checked;
+export const updateCheckedState = (value: string, checked: boolean) => {
+  let newSelectedState = { [value]: checked };
 
-  return {
-    ...prevOffer,
-    prices: prevOffer.prices.map((price) => {
-      const isDecoder = price.id === EService.DecoderId;
+  if (value === EService.TvId && !checked)
+    return { ...newSelectedState, [EService.DecoderId]: false };
 
-      if (isTvUnchecked && isDecoder) return { ...price, isChecked: false };
-
-      if (price.id === value) return { ...price, isChecked: checked };
-
-      return price;
-    }),
-  };
+  return newSelectedState;
 };

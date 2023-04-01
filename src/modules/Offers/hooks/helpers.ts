@@ -1,5 +1,5 @@
 import { locales } from "@/consts/locales";
-import { TMappedOffer, TPriceObj } from "../types";
+import { TMappedOffer, TPriceObj, TSelected } from "../types";
 
 export const formatPrice = (price: number) =>
   Intl.NumberFormat("pl-PL", {
@@ -16,15 +16,15 @@ const checkedServicesSum = (priceObj: TPriceObj, checkedIds: string[]) =>
 const getPromoDescription = (promoId: string) =>
   locales.promotionDescriptions[promoId] || "";
 
-export const countPromo = (offer: TMappedOffer) => {
+export const countPromo = (offer: TMappedOffer, selected: TSelected) => {
   if (!offer) return;
 
-  const { prices, pricesObj, promotions } = offer;
+  const { pricesObj, promotions } = offer;
 
   // count base sum - without promotion
-  const checkedIds = prices
-    .filter((price) => price.isChecked)
-    .map(({ id }) => id);
+  const checkedIds = Object.entries(selected)
+    .filter(([_key, val]) => Boolean(val))
+    .map(([key]) => key);
   const baseSum = checkedServicesSum(pricesObj, checkedIds);
 
   // find promotions

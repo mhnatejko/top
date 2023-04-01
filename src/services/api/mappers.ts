@@ -24,12 +24,17 @@ export const offersResponseMapper = (offers: TOffer[]) => {
       label: locales.labels[price.id] || price.id,
       isChecked: false,
     }));
+    const selected = prices.reduce(
+      (prev, curr) => ({ ...prev, [curr.id]: false }),
+      {}
+    );
 
     return {
       ...restOffer,
       prices: mappedPrices,
       pricesObj,
       promotions,
+      selected,
     };
   });
 };
